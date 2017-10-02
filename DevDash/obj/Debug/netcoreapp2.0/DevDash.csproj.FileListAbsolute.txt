@@ -1,0 +1,12 @@
+C:\Users\panda\Source\Repos\DevDash\DevDash\bin\Debug\netcoreapp2.0\DevDash.deps.json
+C:\Users\panda\Source\Repos\DevDash\DevDash\bin\Debug\netcoreapp2.0\DevDash.runtimeconfig.json
+C:\Users\panda\Source\Repos\DevDash\DevDash\bin\Debug\netcoreapp2.0\DevDash.runtimeconfig.dev.json
+C:\Users\panda\Source\Repos\DevDash\DevDash\bin\Debug\netcoreapp2.0\DevDash.dll
+C:\Users\panda\Source\Repos\DevDash\DevDash\bin\Debug\netcoreapp2.0\DevDash.pdb
+C:\Users\panda\Source\Repos\DevDash\DevDash\obj\Debug\netcoreapp2.0\DevDash.csprojResolveAssemblyReference.cache
+C:\Users\panda\Source\Repos\DevDash\DevDash\obj\Debug\netcoreapp2.0\DevDash.csproj.CoreCompileInputs.cache
+C:\Users\panda\Source\Repos\DevDash\DevDash\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\panda\Source\Repos\DevDash\DevDash\obj\Debug\netcoreapp2.0\DevDash.AssemblyInfoInputs.cache
+C:\Users\panda\Source\Repos\DevDash\DevDash\obj\Debug\netcoreapp2.0\DevDash.AssemblyInfo.cs
+C:\Users\panda\Source\Repos\DevDash\DevDash\obj\Debug\netcoreapp2.0\DevDash.dll
+C:\Users\panda\Source\Repos\DevDash\DevDash\obj\Debug\netcoreapp2.0\DevDash.pdb
