@@ -9,5 +9,7 @@ namespace DevDash.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        //TODO: Should include access to the API keys and the user profile information
+
     }
 }
