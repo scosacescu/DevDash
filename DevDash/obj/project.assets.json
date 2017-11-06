@@ -13116,7 +13116,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\panda\\.nuget\\packages\\": {},
+    "C:\\Users\\Stephanie\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -13125,17 +13125,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\panda\\Source\\Repos\\DevDash\\DevDash\\DevDash.csproj",
+      "projectUniqueName": "C:\\BCIT\\DevDash\\DevDash\\DevDash\\DevDash.csproj",
       "projectName": "DevDash",
-      "projectPath": "C:\\Users\\panda\\Source\\Repos\\DevDash\\DevDash\\DevDash.csproj",
-      "packagesPath": "C:\\Users\\panda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\panda\\Source\\Repos\\DevDash\\DevDash\\obj\\",
+      "projectPath": "C:\\BCIT\\DevDash\\DevDash\\DevDash\\DevDash.csproj",
+      "packagesPath": "C:\\Users\\Stephanie\\.nuget\\packages\\",
+      "outputPath": "C:\\BCIT\\DevDash\\DevDash\\DevDash\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\panda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Stephanie\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
