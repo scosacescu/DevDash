@@ -9,6 +9,11 @@ namespace DevDash.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
