@@ -21,8 +21,9 @@ namespace DevDash.Services
                 Scopes = { "user", "repos" },
                 RedirectUri = new System.Uri(""),
             };
-
             var oauthLoginUrl = client.Oauth.GetGitHubLoginUrl(request);
+
+            var token = await client.Oauth.CreateAccessToken(request);
         }
 
         public async Task GetIssuesAsync()

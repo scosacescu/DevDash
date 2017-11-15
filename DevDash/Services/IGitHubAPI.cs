@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace DevDash.Services
 {
-    public class IGitHubAPI
+    public interface IGitHubAPI
     {
+        
     }
 }
