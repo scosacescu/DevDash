@@ -33,5 +33,17 @@ namespace DevDash.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult IndividualProjectDD()
+        {
+            ViewData["Message"] = "Your dashboard page.";
+            return View();
+        }
+
+        public IActionResult LoggedInHome()
+        {
+            ViewData["Message"] = "Your landing page.";
+            return View();
+        }
     }
 }
