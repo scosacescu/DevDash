@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Logged in DevDash Home";
+}
+
+<h2>Dashboard</h2>
+<div id="containerHomeContent">
+    <h3>Choose from your existing Dashboards: </h3>
+    <div id="ddListDisplay">
+        <div class="trelloBoardPreview">
+            <p id="text">Name of Board </p id="text">
+        </div>
+
+        @*RENDER ALL DD's HERE*@
+    </div>
+    <h5>Or, create a new one by linking a repo and board:</h5>
+    <div>
+        <form action="/action_page.php">
+            <select name="repos">
+                <option value="repo1">repo1</option>
+                <option value="repo2">repo2</option>
+                <option value="repo3">repo3</option>
+                <option value="repo4">repo4</option>
+            </select>
+            <select name="trelloboards">
+                <option value="board1">board1</option>
+                <option value="board2">board2</option>
+                <option value="board3">board3</option>
+                <option value="board3">b4ard3</option>
+            </select>
+            <input type="submit">
+        </form>
+    </div>
+
+</div>
+
+
