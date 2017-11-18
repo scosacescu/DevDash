@@ -5,13 +5,24 @@
     <UserSecretsId>aspnet-DevDash-B3FF4E10-8B8F-45CB-B9DC-172536A283A7</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\GitHubModels\**" />
+    <Compile Remove="Models\TrelloModels\**" />
+    <Content Remove="Models\GitHubModels\**" />
+    <Content Remove="Models\TrelloModels\**" />
+    <EmbeddedResource Remove="Models\GitHubModels\**" />
+    <EmbeddedResource Remove="Models\TrelloModels\**" />
+    <None Remove="Models\GitHubModels\**" />
+    <None Remove="Models\TrelloModels\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="JSON" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Octokit" Version="0.28.0" />
     <PackageReference Include="TrelloNet" Version="0.6.2" />
   </ItemGroup>
@@ -23,8 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\GitHubModels\" />
-    <Folder Include="Models\TrelloModels\" />
     <Folder Include="scripts\" />
   </ItemGroup>
 
