@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
     <PackageReference Include="Octokit" Version="0.28.0" />
+    <PackageReference Include="TrelloNet" Version="0.6.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
   <ItemGroup>
     <Folder Include="Models\GitHubModels\" />
     <Folder Include="Models\TrelloModels\" />
+    <Folder Include="scripts\" />
   </ItemGroup>
 
 </Project>

@@ -1,37 +1,76 @@
-﻿using Octokit;
+﻿using Microsoft.AspNetCore.Mvc;
+using Octokit;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Security;
 
 namespace DevDash.Services
 {
-    //TODO: Add API service for authentication
-    //TODO: Get all repos for a user
-    //TODO: Add service for getting API issues for a given user
-    public class GitHubAPI
+    public class GitHubAPI: IGitHubAPI
     {
+        GitHubClient client = new GitHubClient(new ProductHeaderValue("DevDash"));
 
-        public async Task OAuthUser()
+        //TODO: These should be kept in a config file that is not checked in
+        string clientId = "";
+        string clientSecret = "";
+
+        public string GitHubAuthURL()
         {
-            //TODO: These should be kept in a config file that is not checked in
-            var clientId = "clientId";
-            var clientSecret = "secret";
-            var client = new GitHubClient(new ProductHeaderValue("DevDash"));
             var request = new OauthLoginRequest(clientId)
             {
                 Scopes = { "user", "repos" },
-                RedirectUri = new System.Uri(""),
             };
             var oauthLoginUrl = client.Oauth.GetGitHubLoginUrl(request);
 
-            var token = await client.Oauth.CreateAccessToken(request);
+            return oauthLoginUrl.ToString();
         }
 
-        public async Task GetIssuesAsync()
+        public async Task<OauthToken> Authorize(string code, string state)
         {
-            var client = new GitHubClient(new ProductHeaderValue("DevDash"));
-            //FIXME: The token should be grabbed from the database
-            var tokenAuth = new Credentials("token");
-            client.Credentials = tokenAuth;
+            OauthToken token = new OauthToken();
+
+            if (!string.IsNullOrEmpty(code))
+            {
+                token = await client.Oauth.CreateAccessToken(
+                    new OauthTokenRequest(clientId, clientSecret, code));
+            }
+
+            return token;
+
+        }
+
+        public async Task<IReadOnlyList<Issue>> GetIssuesAsync(string accessToken, long repoId)
+        {
+
+            if(accessToken != null)
+            {
+                client.Credentials = new Credentials(accessToken);
+            }
+            try
+            {
+                var issues = await client.Issue.GetAllForRepository(repoId);
+                return issues;
+            } catch(AuthorizationException authException)
+            {
+                throw authException;
+            }
+        }
+
+        public async Task<IReadOnlyList<Repository>> getRepositoriesAsync(string accessToken)
+        {
+            if (accessToken != null)
+            {
+                client.Credentials = new Credentials(accessToken);
+            }
+            try
+            {
+                var repositories = await client.Repository.GetAllForCurrent();
+                return repositories;
+            }
+            catch (AuthorizationException authException)
+            {
+                throw authException;
+            }
+
         }
     }
 }
