@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using DevDash.Data;
 using DevDash.Models;
 using DevDash.Services;
+using DevDash.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevDash
 {
@@ -26,8 +28,10 @@ namespace DevDash
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO: Move this to config file
+            var connection = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connection));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -65,6 +69,7 @@ namespace DevDash
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+            services.AddDbContext<DevDashDBContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
