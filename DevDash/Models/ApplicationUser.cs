@@ -10,6 +10,11 @@ namespace DevDash.Models
     public class ApplicationUser : IdentityUser
     {
         //TODO: Should include access to the API keys and the user profile information
-
+        public Guid UserID { get; set; }
+        public override string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string GithubKey { get; set; }
+        public override string Email { get; set; }
     }
 }
