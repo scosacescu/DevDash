@@ -10,8 +10,18 @@ namespace DevDash.Models.AccountViewModels
     {
         [Required]
         [DataType(DataType.Text)]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
