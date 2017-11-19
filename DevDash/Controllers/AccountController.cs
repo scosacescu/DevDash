@@ -57,6 +57,8 @@ namespace DevDash.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            _logger.LogInformation(returnUrl);
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
