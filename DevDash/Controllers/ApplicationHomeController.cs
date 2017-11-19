@@ -7,147 +7,57 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DevDash.Data;
 using DevDash.Models;
+using Microsoft.AspNetCore.Identity;
+using DevDash.Services;
+using Microsoft.Extensions.Configuration;
+using DevDash.Models.AuthorizationViewModels;
 
 namespace DevDash.Controllers
 {
     public class ApplicationHomeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
+        GitHubAPI gitHubAPI;
+        TrelloAPI trelloApi;
 
-        public ApplicationHomeController(ApplicationDbContext context)
+
+        public ApplicationHomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration Configuration)
         {
+            gitHubAPI = new GitHubAPI(Configuration);
+            trelloApi = new TrelloAPI(Configuration);
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: ApplicationHome
         public async Task<IActionResult> Index()
         {
             return View(await _context.ApplicationUser.ToListAsync());
         }
 
-        // GET: ApplicationHome/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicationUser = await _context.ApplicationUser
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicationUser);
-        }
-
-        // GET: ApplicationHome/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ApplicationHome/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,GithubKey,TrelloKey,Authenticated,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
+        public async Task<IActionResult> CreateDashboard(CreateDashboardViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(applicationUser);
+                Guid guid = Guid.NewGuid();
+                var user = await _userManager.GetUserAsync(User);
+                var dashboard = new Dashboard
+                {
+                    DashboardId = guid,
+                    DashboardName = model.DashboardName,
+                    RepoId = model.RepoId,
+                    BoardId = model.BoardId,
+                    UserId = user.Id
+                };
+
+                _context.Add(dashboard);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Dashboards", new { id = guid.ToString() });
             }
-            return View(applicationUser);
+            return View(model);
         }
 
-        // GET: ApplicationHome/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-            return View(applicationUser);
-        }
-
-        // POST: ApplicationHome/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,GithubKey,TrelloKey,Authenticated,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        {
-            if (id != applicationUser.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(applicationUser);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ApplicationUserExists(applicationUser.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicationUser);
-        }
-
-        // GET: ApplicationHome/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicationUser = await _context.ApplicationUser
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicationUser);
-        }
-
-        // POST: ApplicationHome/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
-            _context.ApplicationUser.Remove(applicationUser);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ApplicationUserExists(string id)
-        {
-            return _context.ApplicationUser.Any(e => e.Id == id);
-        }
     }
 }

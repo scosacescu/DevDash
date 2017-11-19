@@ -15,9 +15,9 @@ namespace DevDash.Models.AuthorizationViewModels
         public string TrelloAuthURL { get; set; }
         
         [Required]
-        public bool githubAuthorized { get; set; }
+        public bool GithubAuthorized { get; set; }
 
         [Required]
-        public bool trelloAuthorized { get; set; }
+        public bool TrelloAuthorized { get; set; }
     }
 }

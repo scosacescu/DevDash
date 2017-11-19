@@ -128,5 +128,7 @@ namespace DevDash.Data
         }
 
         public DbSet<DevDash.Models.ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<DevDash.Models.Dashboard> Dashboard { get; set; }
     }
 }
