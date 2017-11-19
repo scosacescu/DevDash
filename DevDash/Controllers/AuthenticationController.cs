@@ -50,11 +50,10 @@ namespace DevDash.Controllers
         public async Task<IActionResult> AuthorizeGithub(string code, string state)
         {
             var user = await _userManager.GetUserAsync(User);
-            //Store the code in the database
             OauthToken token = await gitHubAPI.Authorize(code, state);
             HttpContext.Session.SetString("GithubToken", token.ToString());
             user.GithubKey = code;
-
+            user.GithubAuthenticated = true;
             await _userManager.UpdateAsync(user);
             return RedirectToAction("Index");
         }
@@ -64,6 +63,7 @@ namespace DevDash.Controllers
             var user = await _userManager.GetUserAsync(User);
             HttpContext.Session.SetString("TrelloToken", token);
             user.TrelloKey = token;
+            user.TrelloAuthenticated = true;
             await _userManager.UpdateAsync(user);
             return RedirectToAction("Index");
         }
