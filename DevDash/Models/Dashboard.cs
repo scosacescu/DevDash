@@ -7,7 +7,7 @@ namespace DevDash.Models
     public partial class Dashboard
     {
         public string UserId { get; set; }
-        public string RepoId { get; set; }
+        public long RepoId { get; set; }
         public string BoardId { get; set; }
         public string DashboardName { get; set; }
         [Key]

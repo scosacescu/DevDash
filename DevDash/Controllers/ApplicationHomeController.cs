@@ -44,16 +44,33 @@ namespace DevDash.Controllers
             var repoSelectListItem = new List<SelectListItem>();
             var boardSelectListItem = new List<SelectListItem>();
 
-            foreach(Octokit.Repository repo in repos)
+            foreach (Octokit.Repository repo in repos)
             {
-
+                GitHub gitHub = new GitHub
+                {
+                    UserId = user.Id,
+                    RepoId = repo.Id,
+                    RepoName = repo.Name,
+                };
+                _context.Add(gitHub);
+                repoSelectListItem.Add(new SelectListItem { Text = repo.Name, Value = repo.Id.ToString() });
             }
 
             foreach(TrelloNet.Board board in boards)
             {
+                Trello trello = new Trello
+                {
+                    UserId = user.Id,
+                    BoardId = board.Id,
+                    BoardName = board.Name,
+                };
+                _context.Add(trello);
+                boardSelectListItem.Add(new SelectListItem { Text = board.Name, Value = board.Id});
 
             }
 
+
+            await _context.SaveChangesAsync();
             var dashboards = user.Dashboard;
             var repoSelectList = new SelectList(repoSelectListItem, "Value", "Text");
             var boardSelectList = new SelectList(boardSelectListItem, "Value", "Text");
@@ -65,7 +82,7 @@ namespace DevDash.Controllers
                 TrelloBoard = boardSelectList
             };
 
-            return View(await _context.ApplicationUser.ToListAsync());
+            return View(viewmodel);
         }
 
         [HttpPost]
@@ -74,13 +91,14 @@ namespace DevDash.Controllers
         {
             if (ModelState.IsValid)
             {
+                long.TryParse(model.RepoId, out long repoId);
                 Guid guid = Guid.NewGuid();
                 var user = await _userManager.GetUserAsync(User);
                 var dashboard = new Dashboard
                 {
                     DashboardId = guid,
                     DashboardName = model.DashboardName,
-                    RepoId = model.RepoId,
+                    RepoId = repoId,
                     BoardId = model.BoardId,
                     UserId = user.Id
                 };

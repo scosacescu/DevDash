@@ -14,7 +14,6 @@ namespace DevDash.Models
         public string UserId { get; set; }
         public string BoardId { get; set; }
         public string BoardName { get; set; }
-        public string BackgroundImageUrl { get; set; }
 
         public ApplicationUser User { get; set; }
         public ICollection<Dashboard> Dashboard { get; set; }
