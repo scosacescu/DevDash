@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using DevDash.Services;
 using Microsoft.Extensions.Configuration;
 using DevDash.Models.AuthorizationViewModels;
+using DevDash.Models.ApplicationHomeViewModels;
 
 namespace DevDash.Controllers
 {
@@ -32,6 +33,38 @@ namespace DevDash.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            var trelloToken = user.TrelloKey;
+            HttpContext.Session.TryGetValue("GithubToken", out byte[] githubTokenByteArray);
+            var githubToken = githubTokenByteArray.ToString();
+
+            var repos = await gitHubAPI.getRepositoriesAsync(githubToken);
+            var boards = trelloApi.getUserTrelloBoards(trelloToken);
+
+            var repoSelectListItem = new List<SelectListItem>();
+            var boardSelectListItem = new List<SelectListItem>();
+
+            foreach(Octokit.Repository repo in repos)
+            {
+
+            }
+
+            foreach(TrelloNet.Board board in boards)
+            {
+
+            }
+
+            var dashboards = user.Dashboard;
+            var repoSelectList = new SelectList(repoSelectListItem, "Value", "Text");
+            var boardSelectList = new SelectList(boardSelectListItem, "Value", "Text");
+
+            ApplicationHomeViewModel viewmodel = new ApplicationHomeViewModel
+            {
+                UserDashboards = dashboards,
+                GithubRepos = repoSelectList,
+                TrelloBoard = boardSelectList
+            };
+
             return View(await _context.ApplicationUser.ToListAsync());
         }
 
