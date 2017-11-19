@@ -11,9 +11,10 @@ using System;
 namespace DevDash.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171119024208_newUserField")]
+    partial class newUserField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +28,8 @@ namespace DevDash.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<bool>("Authenticated");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -36,8 +39,6 @@ namespace DevDash.Data.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
-
-                    b.Property<bool>("GithubAuthenticated");
 
                     b.Property<string>("GithubKey");
 
@@ -60,8 +61,6 @@ namespace DevDash.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TrelloAuthenticated");
 
                     b.Property<string>("TrelloKey");
 
