@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace DevDash.Models
 {
-    public partial class User
+    public partial class User: IdentityUser
     {
         public User()
         {
@@ -12,13 +13,13 @@ namespace DevDash.Models
             Trello = new HashSet<Trello>();
         }
 
-        public Guid UserId { get; set; }
-        public string UserName { get; set; }
+        public string UserId { get; set; }
+        public override string UserName { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public string GithubKey { get; set; }
         public string TrelloKey { get; set; }
-        public string Email { get; set; }
+        public override string Email { get; set; }
         public byte[] Password { get; set; }
 
         public ICollection<Dashboard> Dashboard { get; set; }

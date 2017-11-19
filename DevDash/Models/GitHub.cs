@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DevDash.Models
 {
@@ -10,12 +12,12 @@ namespace DevDash.Models
             Dashboard = new HashSet<Dashboard>();
         }
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public string RepoId { get; set; }
         public string RepoName { get; set; }
         public string IssuesUrl { get; set; }
 
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
         public ICollection<Dashboard> Dashboard { get; set; }
     }
 }
