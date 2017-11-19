@@ -16,9 +16,29 @@
     <None Remove="Models\TrelloModels\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171017234850_IntialCreate.cs" />
+    <Compile Remove="Data\Migrations\20171017234850_IntialCreate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171119004849_something.cs" />
+    <Compile Remove="Data\Migrations\20171119004849_something.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171119011301_entityUpdate.cs" />
+    <Compile Remove="Data\Migrations\20171119011301_entityUpdate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171119024208_newUserField.cs" />
+    <Compile Remove="Data\Migrations\20171119024208_newUserField.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171119032546_DBUpdte.cs" />
+    <Compile Remove="Data\Migrations\20171119032546_DBUpdte.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171119202931_efUpdate.cs" />
+    <Compile Remove="Data\Migrations\20171119202931_efUpdate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171119203257_efU.cs" />
+    <Compile Remove="Data\Migrations\20171119203257_efU.Designer.cs" />
+    <Compile Remove="Data\Migrations\20171119203411_efasda.cs" />
+    <Compile Remove="Data\Migrations\20171119203411_efasda.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
-    <PackageReference Include="DotNetOpenAuth" Version="4.3.4.13329" />
     <PackageReference Include="JSON" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.1" />

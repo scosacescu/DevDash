@@ -7,147 +7,108 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DevDash.Data;
 using DevDash.Models;
+using Microsoft.AspNetCore.Identity;
+using DevDash.Services;
+using Microsoft.Extensions.Configuration;
+using DevDash.Models.AuthorizationViewModels;
+using DevDash.Models.ApplicationHomeViewModels;
 
 namespace DevDash.Controllers
 {
     public class ApplicationHomeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
+        GitHubAPI gitHubAPI;
+        TrelloAPI trelloApi;
 
-        public ApplicationHomeController(ApplicationDbContext context)
+
+        public ApplicationHomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration Configuration)
         {
+            gitHubAPI = new GitHubAPI(Configuration);
+            trelloApi = new TrelloAPI(Configuration);
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: ApplicationHome
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ApplicationUser.ToListAsync());
-        }
+            var user = await _userManager.GetUserAsync(User);
+            var trelloToken = user.TrelloKey;
+            HttpContext.Session.TryGetValue("GithubToken", out byte[] githubTokenByteArray);
+            var githubToken = githubTokenByteArray.ToString();
 
-        // GET: ApplicationHome/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
+            var repos = await gitHubAPI.getRepositoriesAsync(githubToken);
+            var boards = trelloApi.getUserTrelloBoards(trelloToken);
+
+            var repoSelectListItem = new List<SelectListItem>();
+            var boardSelectListItem = new List<SelectListItem>();
+
+            foreach (Octokit.Repository repo in repos)
             {
-                return NotFound();
-            }
-
-            var applicationUser = await _context.ApplicationUser
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicationUser);
-        }
-
-        // GET: ApplicationHome/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ApplicationHome/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,GithubKey,TrelloKey,Authenticated,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(applicationUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicationUser);
-        }
-
-        // GET: ApplicationHome/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-            return View(applicationUser);
-        }
-
-        // POST: ApplicationHome/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName,GithubKey,TrelloKey,Authenticated,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        {
-            if (id != applicationUser.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                GitHub gitHub = new GitHub
                 {
-                    _context.Update(applicationUser);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                    UserId = user.Id,
+                    RepoId = repo.Id,
+                    RepoName = repo.Name,
+                };
+                _context.Add(gitHub);
+                repoSelectListItem.Add(new SelectListItem { Text = repo.Name, Value = repo.Id.ToString() });
+            }
+
+            foreach(TrelloNet.Board board in boards)
+            {
+                Trello trello = new Trello
                 {
-                    if (!ApplicationUserExists(applicationUser.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicationUser);
-        }
+                    UserId = user.Id,
+                    BoardId = board.Id,
+                    BoardName = board.Name,
+                };
+                _context.Add(trello);
+                boardSelectListItem.Add(new SelectListItem { Text = board.Name, Value = board.Id});
 
-        // GET: ApplicationHome/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
             }
 
-            var applicationUser = await _context.ApplicationUser
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
 
-            return View(applicationUser);
-        }
-
-        // POST: ApplicationHome/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
-            _context.ApplicationUser.Remove(applicationUser);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var dashboards = user.Dashboard;
+            var repoSelectList = new SelectList(repoSelectListItem, "Value", "Text");
+            var boardSelectList = new SelectList(boardSelectListItem, "Value", "Text");
+
+            ApplicationHomeViewModel viewmodel = new ApplicationHomeViewModel
+            {
+                UserDashboards = dashboards,
+                GithubRepos = repoSelectList,
+                TrelloBoard = boardSelectList
+            };
+
+            return View(viewmodel);
         }
 
-        private bool ApplicationUserExists(string id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateDashboard(CreateDashboardViewModel model)
         {
-            return _context.ApplicationUser.Any(e => e.Id == id);
+            if (ModelState.IsValid)
+            {
+                long.TryParse(model.RepoId, out long repoId);
+                Guid guid = Guid.NewGuid();
+                var user = await _userManager.GetUserAsync(User);
+                var dashboard = new Dashboard
+                {
+                    DashboardId = guid,
+                    DashboardName = model.DashboardName,
+                    RepoId = repoId,
+                    BoardId = model.BoardId,
+                    UserId = user.Id
+                };
+
+                _context.Add(dashboard);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Dashboards", new { id = guid.ToString() });
+            }
+            return View(model);
         }
+
     }
 }

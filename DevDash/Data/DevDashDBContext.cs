@@ -73,12 +73,6 @@ namespace DevDash.Models
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
-                entity.Property(e => e.IssuesUrl)
-                    .IsRequired()
-                    .HasColumnName("issuesURL")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.RepoName)
                     .IsRequired()
                     .HasColumnName("repoName")
@@ -101,12 +95,6 @@ namespace DevDash.Models
                 entity.Property(e => e.BoardId)
                     .HasColumnName("boardID")
                     .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.BackgroundImageUrl)
-                    .IsRequired()
-                    .HasColumnName("backgroundImageURL")
-                    .HasMaxLength(200)
                     .IsUnicode(false);
 
                 entity.Property(e => e.BoardName)

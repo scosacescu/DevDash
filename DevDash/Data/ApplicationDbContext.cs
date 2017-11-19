@@ -77,12 +77,6 @@ namespace DevDash.Data
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
-                entity.Property(e => e.IssuesUrl)
-                    .IsRequired()
-                    .HasColumnName("issuesURL")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.RepoName)
                     .IsRequired()
                     .HasColumnName("repoName")
@@ -107,12 +101,6 @@ namespace DevDash.Data
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
-                entity.Property(e => e.BackgroundImageUrl)
-                    .IsRequired()
-                    .HasColumnName("backgroundImageURL")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.BoardName)
                     .IsRequired()
                     .HasColumnName("boardName")
@@ -128,5 +116,7 @@ namespace DevDash.Data
         }
 
         public DbSet<DevDash.Models.ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<DevDash.Models.Dashboard> Dashboard { get; set; }
     }
 }
