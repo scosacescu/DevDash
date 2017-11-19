@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AuthorizeTrello</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var hash = location.hash.substr(1);
+            var token = hash.substr(hash.indexOf("=") + 1);
+            
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AuthorizeTrello", "Authentication")',
+                data: { trelloToken: token }
+            })
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

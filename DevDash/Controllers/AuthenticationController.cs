@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using DevDash.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DevDash.Models.AuthorizationViewModels;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.Configuration;
 
 namespace DevDash.Controllers
 {
@@ -17,11 +20,12 @@ namespace DevDash.Controllers
     {
         private readonly ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
-        GitHubAPI gitHubAPI = new GitHubAPI();
+        GitHubAPI gitHubAPI;
         TrelloAPI trelloApi = new TrelloAPI();
 
-        public AuthenticationController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AuthenticationController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration Configuration)
         {
+            gitHubAPI = new GitHubAPI(Configuration); 
             _context = context;
             _userManager = userManager;
         }
@@ -37,7 +41,7 @@ namespace DevDash.Controllers
                 var githubCode = user.GithubKey;
                 OauthToken oauthToken = await gitHubAPI.Authorize(githubCode, "");
                 HttpContext.Session.SetString("GithubToken", oauthToken.ToString());
-                return RedirectToAction("Index", "ApplicationHomeController");
+                return RedirectToAction("Index", "ApplicationHome");
             }
             else
             {
@@ -55,7 +59,7 @@ namespace DevDash.Controllers
             }
         }
 
-        public async Task<IActionResult> AuthorizeGithub(string code, string state)
+        public async Task<IActionResult> AuthorizeGithub(string code, string state = "")
         {
             var user = await _userManager.GetUserAsync(User);
             OauthToken token = await gitHubAPI.Authorize(code, state);
@@ -66,11 +70,18 @@ namespace DevDash.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> AuthorizeTrello(string token)
+        public IActionResult AuthorizeTrelloAjax()
         {
+            return View();
+        } 
+
+        [HttpPost]
+        public async Task<IActionResult> AuthorizeTrello()
+        {
+            string id = Request.Form["trelloToken"];
             var user = await _userManager.GetUserAsync(User);
-            HttpContext.Session.SetString("TrelloToken", token);
-            user.TrelloKey = token;
+            HttpContext.Session.SetString("TrelloToken", id);
+            user.TrelloKey = id;
             user.TrelloAuthenticated = true;
             await _userManager.UpdateAsync(user);
             return RedirectToAction("Index");

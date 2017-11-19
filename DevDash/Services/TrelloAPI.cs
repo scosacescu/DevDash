@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,19 +10,27 @@ namespace DevDash.Services
 {
     public class TrelloAPI
     {
-        ITrello trello = new Trello(""); 
+        private string trelloKey;
+        ITrello trello;
+
+        public TrelloAPI(IConfiguration configuration)
+        {
+            trelloKey = configuration["Keys"];
+            trello = new Trello(trelloKey);
+        }
 
         public string GetTrelloAuthUrl()
         {
             var url = trello.GetAuthorizationUrl("DevDash", Scope.ReadWrite, Expiration.Never);
             var uriBuilder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["return_url"] = "https://localhost:44313/authentication/authorizetrello";
+            query["return_url"] = "https://localhost:44313/authentication/authorizetrelloajax/";
+            query["response_type"] = "token";
             uriBuilder.Query = query.ToString();
             return uriBuilder.ToString();
         }
 
-        public  IEnumerable<Board> getUserTrelloBoards(string token)
+        public IEnumerable<Board> getUserTrelloBoards(string token)
         {
             trello.Authorize(token);
             var boards = trello.Boards.ForMe();
@@ -57,7 +66,7 @@ namespace DevDash.Services
         public void CreateNewCard(string token, NewCard card)
         {
             trello.Authorize(token);
-            trello.Cards.Add(card); 
+            trello.Cards.Add(card);
         }
 
     }
