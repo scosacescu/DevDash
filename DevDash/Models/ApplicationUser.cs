@@ -21,6 +21,8 @@ namespace DevDash.Models
         public string LastName { get; set; }
         public string GithubKey { get; set; }
         public string TrelloKey { get; set; }
+        public bool GithubAuthenticated { get; set; }
+        public bool TrelloAuthenticated { get; set; }
 
 
         public ICollection<Dashboard> Dashboard { get; set; }

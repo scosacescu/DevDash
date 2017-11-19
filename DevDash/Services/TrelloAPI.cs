@@ -23,33 +23,33 @@ namespace DevDash.Services
             return boards;
         }
 
-        public IEnumerable<List> getUserBoardList(string token, IBoardId boardId)
+        public IEnumerable<List> GetUserBoardList(string token, IBoardId boardId)
         {
             trello.Authorize(token);
             var lists = trello.Lists.ForBoard(boardId);
             return lists;
         }
 
-        public IEnumerable<Card> getBoardCards(string token, IBoardId boardId)
+        public IEnumerable<Card> GetBoardCards(string token, IBoardId boardId)
         {
             trello.Authorize(token);
             var cards = trello.Cards.ForBoard(boardId);
             return cards;
         }
 
-        public void updateCard(string token, IUpdatableCard card)
+        public void UpdateCard(string token, IUpdatableCard card)
         {
             trello.Authorize(token);
             trello.Cards.Update(card);
         }
 
-        public void deleteCard(string token, ICardId cardId)
+        public void DeleteCard(string token, ICardId cardId)
         {
             trello.Authorize(token);
             trello.Cards.Delete(cardId);
         }
 
-        public void createNewCard(string token, NewCard card)
+        public void CreateNewCard(string token, NewCard card)
         {
             trello.Authorize(token);
             trello.Cards.Add(card); 

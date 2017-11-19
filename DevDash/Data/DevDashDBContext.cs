@@ -9,7 +9,6 @@ namespace DevDash.Models
         public virtual DbSet<Dashboard> Dashboard { get; set; }
         public virtual DbSet<GitHub> GitHub { get; set; }
         public virtual DbSet<Trello> Trello { get; set; }
-        public virtual DbSet<User> User { get; set; }
 
         public DevDashDBContext(DbContextOptions<DevDashDBContext> options): base(options)
         {
@@ -121,52 +120,6 @@ namespace DevDash.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Trello_ToUser");
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.Property(e => e.UserId)
-                    .HasColumnName("userID")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasColumnName("email")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FName)
-                    .IsRequired()
-                    .HasColumnName("fName")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GithubKey)
-                    .HasColumnName("githubKey")
-                    .HasMaxLength(64)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LName)
-                    .IsRequired()
-                    .HasColumnName("lName")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasColumnName("password")
-                    .HasColumnType("binary(64)");
-
-                entity.Property(e => e.TrelloKey)
-                    .HasColumnName("trelloKey")
-                    .HasMaxLength(64)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasColumnName("userName")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
             });
         }
     }

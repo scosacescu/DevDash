@@ -64,6 +64,7 @@ namespace DevDash
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+            services.AddSession();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
         }
 
@@ -84,6 +85,7 @@ namespace DevDash
             app.UseStaticFiles();
 
             app.UseAuthentication();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
