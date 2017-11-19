@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Octokit;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,11 +8,15 @@ namespace DevDash.Services
 {
     public class GitHubAPI: IGitHubAPI
     {
-        GitHubClient client = new GitHubClient(new ProductHeaderValue("DevDash"));
+        public GitHubAPI(IConfiguration configuration)
+        {
+            clientId = configuration["Keys:GitHubClientId"];
+            clientSecret = configuration["Keys:GitHubClientSecret"];
+        }
 
-        //TODO: These should be kept in a config file that is not checked in
-        string clientId = "";
-        string clientSecret = "";
+        GitHubClient client = new GitHubClient(new ProductHeaderValue("DevDash"));
+        private string clientId;
+        private string clientSecret;
 
         public string GitHubAuthURL()
         {

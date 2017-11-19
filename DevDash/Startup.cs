@@ -62,6 +62,7 @@ namespace DevDash
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddMvc();
             services.AddSession();
@@ -93,6 +94,7 @@ namespace DevDash
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }
