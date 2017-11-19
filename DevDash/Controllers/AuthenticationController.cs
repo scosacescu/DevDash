@@ -21,11 +21,12 @@ namespace DevDash.Controllers
         private readonly ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
         GitHubAPI gitHubAPI;
-        TrelloAPI trelloApi = new TrelloAPI();
+        TrelloAPI trelloApi;
 
         public AuthenticationController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration Configuration)
         {
-            gitHubAPI = new GitHubAPI(Configuration); 
+            gitHubAPI = new GitHubAPI(Configuration);
+            trelloApi = new TrelloAPI(Configuration);
             _context = context;
             _userManager = userManager;
         }
