@@ -36,7 +36,7 @@ namespace DevDash.Controllers
             var user = await _userManager.GetUserAsync(User);
             var trelloToken = user.TrelloKey;
             HttpContext.Session.TryGetValue("GithubToken", out byte[] githubTokenByteArray);
-            var githubToken = githubTokenByteArray.ToString();
+            var githubToken = System.Text.Encoding.Default.GetString(githubTokenByteArray);
 
             var repos = await gitHubAPI.getRepositoriesAsync(githubToken);
             var boards = trelloApi.getUserTrelloBoards(trelloToken);
@@ -75,22 +75,29 @@ namespace DevDash.Controllers
             var repoSelectList = new SelectList(repoSelectListItem, "Value", "Text");
             var boardSelectList = new SelectList(boardSelectListItem, "Value", "Text");
 
-            ApplicationHomeViewModel viewmodel = new ApplicationHomeViewModel
+            ApplicationHomeViewModel appviewmodel = new ApplicationHomeViewModel
             {
                 UserDashboards = dashboards,
                 GithubRepos = repoSelectList,
                 TrelloBoard = boardSelectList
             };
 
-            return View(viewmodel);
+            CombinedViewModel viewModel = new CombinedViewModel
+            {
+                ApplicationHomeViewModel = appviewmodel,
+                CreateDashboardViewModel = new CreateDashboardViewModel()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateDashboard(CreateDashboardViewModel model)
+        public async Task<IActionResult> CreateDashboard(CombinedViewModel combinedModel)
         {
             if (ModelState.IsValid)
             {
+                CreateDashboardViewModel model = combinedModel.CreateDashboardViewModel;
                 long.TryParse(model.RepoId, out long repoId);
                 Guid guid = Guid.NewGuid();
                 var user = await _userManager.GetUserAsync(User);
@@ -107,7 +114,7 @@ namespace DevDash.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Dashboards", new { id = guid.ToString() });
             }
-            return View(model);
+            return View(combinedModel);
         }
 
     }

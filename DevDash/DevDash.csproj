@@ -16,27 +16,6 @@
     <None Remove="Models\TrelloModels\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
-    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171017234850_IntialCreate.cs" />
-    <Compile Remove="Data\Migrations\20171017234850_IntialCreate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171119004849_something.cs" />
-    <Compile Remove="Data\Migrations\20171119004849_something.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171119011301_entityUpdate.cs" />
-    <Compile Remove="Data\Migrations\20171119011301_entityUpdate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171119024208_newUserField.cs" />
-    <Compile Remove="Data\Migrations\20171119024208_newUserField.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171119032546_DBUpdte.cs" />
-    <Compile Remove="Data\Migrations\20171119032546_DBUpdte.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171119202931_efUpdate.cs" />
-    <Compile Remove="Data\Migrations\20171119202931_efUpdate.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171119203257_efU.cs" />
-    <Compile Remove="Data\Migrations\20171119203257_efU.Designer.cs" />
-    <Compile Remove="Data\Migrations\20171119203411_efasda.cs" />
-    <Compile Remove="Data\Migrations\20171119203411_efasda.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="JSON" Version="1.0.1" />
@@ -45,9 +24,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Octokit" Version="0.28.0" />
-    <PackageReference Include="RestSharp" Version="104.5.0" />
-    <PackageReference Include="TrelloNet" Version="0.6.2" />
+    <PackageReference Include="TrelloNet.Edge" Version="0.7.2.1" />
   </ItemGroup>
 
   <ItemGroup>

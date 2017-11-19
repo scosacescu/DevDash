@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DevDash.Models.AuthorizationViewModels
+namespace DevDash.Models.ApplicationHomeViewModels
 {
     public class CreateDashboardViewModel
     {

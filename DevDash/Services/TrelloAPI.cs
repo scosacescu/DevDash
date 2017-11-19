@@ -15,7 +15,7 @@ namespace DevDash.Services
 
         public TrelloAPI(IConfiguration configuration)
         {
-            trelloKey = configuration["Keys"];
+            trelloKey = configuration["Keys:TrelloClientKey"];
             trello = new Trello(trelloKey);
         }
 
@@ -33,6 +33,7 @@ namespace DevDash.Services
         public IEnumerable<Board> getUserTrelloBoards(string token)
         {
             trello.Authorize(token);
+            Member me = trello.Members.Me();
             var boards = trello.Boards.ForMe();
             return boards;
         }
