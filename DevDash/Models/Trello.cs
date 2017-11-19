@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DevDash.Models
 {
@@ -10,12 +11,12 @@ namespace DevDash.Models
             Dashboard = new HashSet<Dashboard>();
         }
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public string BoardId { get; set; }
         public string BoardName { get; set; }
         public string BackgroundImageUrl { get; set; }
 
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
         public ICollection<Dashboard> Dashboard { get; set; }
     }
 }
