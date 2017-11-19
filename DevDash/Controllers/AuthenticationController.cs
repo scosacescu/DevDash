@@ -37,12 +37,17 @@ namespace DevDash.Controllers
 
             if (user.GithubAuthenticated && user.TrelloAuthenticated)
             {
-                var trelloToken = user.TrelloKey;
-                HttpContext.Session.SetString("TrelloToken", trelloToken);
-                var githubCode = user.GithubKey;
-                OauthToken oauthToken = await gitHubAPI.Authorize(githubCode, "");
-                HttpContext.Session.SetString("GithubToken", oauthToken.ToString());
-                return RedirectToAction("Index", "ApplicationHome");
+                HttpContext.Session.TryGetValue("GithubToken", out byte[] tokenArray);
+                if (tokenArray != null)
+                {
+                    var trelloToken = user.TrelloKey;
+                    HttpContext.Session.SetString("TrelloToken", trelloToken);
+                    return RedirectToAction("Index", "ApplicationHome");
+                }
+                else
+                {
+                    return Redirect(gitHubAPI.GitHubAuthURL());
+                }
             }
             else
             {
@@ -64,9 +69,11 @@ namespace DevDash.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             OauthToken token = await gitHubAPI.Authorize(code, state);
-            HttpContext.Session.SetString("GithubToken", token.ToString());
-            user.GithubKey = code;
-            user.GithubAuthenticated = true;
+            HttpContext.Session.SetString("GithubToken", token.AccessToken);
+            if (!user.GithubAuthenticated)
+            {
+                user.GithubAuthenticated = true;
+            }
             await _userManager.UpdateAsync(user);
             return RedirectToAction("Index");
         }
@@ -74,7 +81,7 @@ namespace DevDash.Controllers
         public IActionResult AuthorizeTrelloAjax()
         {
             return View();
-        } 
+        }
 
         [HttpPost]
         public async Task<IActionResult> AuthorizeTrello()
