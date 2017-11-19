@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using TrelloNet;
 
 namespace DevDash.Services
@@ -10,10 +11,14 @@ namespace DevDash.Services
     {
         ITrello trello = new Trello(""); 
 
-        public Uri GetTrelloAuthUrl()
+        public string GetTrelloAuthUrl()
         {
             var url = trello.GetAuthorizationUrl("DevDash", Scope.ReadWrite, Expiration.Never);
-            return url;
+            var uriBuilder = new UriBuilder(url);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["return_url"] = "https://localhost:44313/authentication/authorizetrello";
+            uriBuilder.Query = query.ToString();
+            return uriBuilder.ToString();
         }
 
         public  IEnumerable<Board> getUserTrelloBoards(string token)

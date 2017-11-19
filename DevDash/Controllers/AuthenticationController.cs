@@ -9,6 +9,7 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using DevDash.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using DevDash.Models.AuthorizationViewModels;
 
 namespace DevDash.Controllers
 {
@@ -25,7 +26,6 @@ namespace DevDash.Controllers
             _userManager = userManager;
         }
 
-        // GET: Authentication
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -42,8 +42,16 @@ namespace DevDash.Controllers
             else
             {
                 string githubAuthUrl = gitHubAPI.GitHubAuthURL();
-                Uri trelloAuthUrl = trelloApi.GetTrelloAuthUrl();
-                return View(githubAuthUrl, trelloAuthUrl);
+                string trelloAuthUrl = trelloApi.GetTrelloAuthUrl();
+                AuthorizationViewModel vm = new AuthorizationViewModel
+                {
+                    GithubAuthURL = githubAuthUrl,
+                    TrelloAuthURL = trelloAuthUrl,
+                    githubAuthorized = user.GithubAuthenticated,
+                    trelloAuthorized = user.TrelloAuthenticated
+
+                };
+                return View(vm);
             }
         }
 
@@ -58,7 +66,7 @@ namespace DevDash.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> AuthorizeTrelloAsync(string token)
+        public async Task<IActionResult> AuthorizeTrello(string token)
         {
             var user = await _userManager.GetUserAsync(User);
             HttpContext.Session.SetString("TrelloToken", token);
