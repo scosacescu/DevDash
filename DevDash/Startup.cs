@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using DevDash.Data;
 using DevDash.Models;
 using DevDash.Services;
-using DevDash.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace DevDash
 {
@@ -69,7 +64,7 @@ namespace DevDash
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
-            services.AddDbContext<DevDashDBContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

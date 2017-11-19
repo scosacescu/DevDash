@@ -126,5 +126,7 @@ namespace DevDash.Data
                     .HasConstraintName("FK_Trello_ToUser");
             });
         }
+
+        public DbSet<DevDash.Models.ApplicationUser> ApplicationUser { get; set; }
     }
 }
