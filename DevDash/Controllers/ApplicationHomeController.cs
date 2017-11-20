@@ -39,7 +39,7 @@ namespace DevDash.Controllers
             var githubToken = System.Text.Encoding.Default.GetString(githubTokenByteArray);
 
             var repos = await gitHubAPI.getRepositoriesAsync(githubToken);
-            var boards = trelloApi.getUserTrelloBoards(trelloToken);
+            var boards = trelloApi.GetUserTrelloBoards(trelloToken);
 
             var repoSelectListItem = new List<SelectListItem>();
             var boardSelectListItem = new List<SelectListItem>();
@@ -52,7 +52,7 @@ namespace DevDash.Controllers
                     RepoId = repo.Id,
                     RepoName = repo.Name,
                 };
-                _context.Add(gitHub);
+                //_context.Add(gitHub);
                 repoSelectListItem.Add(new SelectListItem { Text = repo.Name, Value = repo.Id.ToString() });
             }
 
@@ -64,7 +64,7 @@ namespace DevDash.Controllers
                     BoardId = board.Id,
                     BoardName = board.Name,
                 };
-                _context.Add(trello);
+                //_context.Add(trello);
                 boardSelectListItem.Add(new SelectListItem { Text = board.Name, Value = board.Id});
 
             }

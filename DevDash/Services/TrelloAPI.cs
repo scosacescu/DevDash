@@ -30,7 +30,7 @@ namespace DevDash.Services
             return uriBuilder.ToString();
         }
 
-        public IEnumerable<Board> getUserTrelloBoards(string token)
+        public IEnumerable<Board> GetUserTrelloBoards(string token)
         {
             trello.Authorize(token);
             Member me = trello.Members.Me();
