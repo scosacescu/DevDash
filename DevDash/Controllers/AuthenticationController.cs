@@ -58,7 +58,7 @@ namespace DevDash.Controllers
                     GithubAuthURL = githubAuthUrl,
                     TrelloAuthURL = trelloAuthUrl,
                     GithubAuthorized = user.GithubAuthenticated,
-                    TrelloAuthorized = true 
+                    TrelloAuthorized = user.TrelloAuthenticated
 
                 };
                 return View(vm);
