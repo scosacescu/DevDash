@@ -14,7 +14,6 @@ namespace DevDash.Models
 
         public string UserId { get; set; }
         public long RepoId { get; set; }
-        [Key]
         public string RepoName { get; set; }
 
         public ApplicationUser User { get; set; }
