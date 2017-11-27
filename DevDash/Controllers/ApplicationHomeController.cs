@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using DevDash.Data;
 using DevDash.Models;
 using Microsoft.AspNetCore.Identity;
 using DevDash.Services;
 using Microsoft.Extensions.Configuration;
-using DevDash.Models.AuthorizationViewModels;
 using DevDash.Models.ApplicationHomeViewModels;
 
 namespace DevDash.Controllers
@@ -52,7 +49,7 @@ namespace DevDash.Controllers
                     RepoId = repo.Id,
                     RepoName = repo.Name,
                 };
-                //_context.Add(gitHub);
+                _context.Add(gitHub);
                 repoSelectListItem.Add(new SelectListItem { Text = repo.Name, Value = repo.Id.ToString() });
             }
 
@@ -64,7 +61,7 @@ namespace DevDash.Controllers
                     BoardId = board.Id,
                     BoardName = board.Name,
                 };
-                //_context.Add(trello);
+                _context.Add(trello);
                 boardSelectListItem.Add(new SelectListItem { Text = board.Name, Value = board.Id});
 
             }
