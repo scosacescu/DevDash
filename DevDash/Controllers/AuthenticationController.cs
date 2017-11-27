@@ -92,7 +92,7 @@ namespace DevDash.Controllers
             user.TrelloKey = id;
             user.TrelloAuthenticated = true;
             await _userManager.UpdateAsync(user);
-            return RedirectToAction("Index");
+            return Json(new {result = "Redirect", url = Url.Action("Index", "Authentication") });
         }
 
     }

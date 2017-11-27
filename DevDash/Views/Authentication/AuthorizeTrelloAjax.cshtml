@@ -14,11 +14,16 @@
         $(document).ready(function () {
             var hash = location.hash.substr(1);
             var token = hash.substr(hash.indexOf("=") + 1);
-            
+
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("AuthorizeTrello", "Authentication")',
-                data: { trelloToken: token }
+                data: { trelloToken: token },
+                success: function (data) {
+                    if (data.result == 'Redirect') {
+                        window.location = data.url;
+                    }
+                }
             })
         });
     </script>
