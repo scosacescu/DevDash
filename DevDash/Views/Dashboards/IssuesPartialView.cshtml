@@ -1,17 +1,24 @@
-﻿@Model IReadOnlyList<IOctokit.Issue>
+﻿@Model DevDash.Models.DashViewModel.GithubIssueViewModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
 <div class="issues" id="verticalScroll">
     <h3>Open Issues for this Repo</h3>
-    <table>
-        @foreach(Octokit.Issue issue in Model)
-        {
-            <tr>
-                @issue.Title
-            </tr>
-        }
+    @if (Model.Issues.Count == 0)
+    {
 
-    </table>
+
+    }
+    else
+    {
+        <table>
+            @foreach (Octokit.Issue issue in Model.Issues)
+            {
+                <tr>
+                    @issue.Title
+                </tr>
+            }
+        </table>
+    }
 </div>

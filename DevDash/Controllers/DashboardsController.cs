@@ -43,7 +43,10 @@ namespace DevDash.Controllers
 
             return View(new DashboardDataViewModel
             {
-                Issues = issues,
+                Issues = new GithubIssueViewModel
+                {
+                    Issues = issues
+                },
                 TrelloViewModel = new TrelloViewModel
                 {
                     TrelloCards = cards,
