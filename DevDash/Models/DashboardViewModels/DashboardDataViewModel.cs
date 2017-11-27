@@ -14,9 +14,6 @@ namespace DevDash.Models.DashboardViewModels
         public IReadOnlyList<Issue> Issues { get; set; }
 
         [Required]
-        public IEnumerable<List> TrelloLists { get; set; }
-        
-        [Required]
-        public IEnumerable<Card> TrelloCards { get; set; }
+        public TrelloViewModel TrelloViewModel { get; set; } 
     }
 }

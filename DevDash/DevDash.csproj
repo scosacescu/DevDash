@@ -9,13 +9,9 @@
 
   <ItemGroup>
     <Compile Remove="Models\GitHubModels\**" />
-    <Compile Remove="Models\TrelloModels\**" />
     <Content Remove="Models\GitHubModels\**" />
-    <Content Remove="Models\TrelloModels\**" />
     <EmbeddedResource Remove="Models\GitHubModels\**" />
-    <EmbeddedResource Remove="Models\TrelloModels\**" />
     <None Remove="Models\GitHubModels\**" />
-    <None Remove="Models\TrelloModels\**" />
   </ItemGroup>
 
 

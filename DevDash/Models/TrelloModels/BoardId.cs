@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using TrelloNet;
 
-namespace DevDash.Models.Trello
+namespace DevDash.Models.TrelloModels
 {
     public class BoardId: IBoardId
     {
-        public string TrelloBoardId { get; }
+        public string TrelloBoardId { get;  set; }
 
         public string GetBoardId()
         {
