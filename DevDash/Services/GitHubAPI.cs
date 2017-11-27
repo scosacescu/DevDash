@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DevDash.Services
 {
-    public class GitHubAPI: IGitHubAPI
+    public class GitHubAPI : IGitHubAPI
     {
         public GitHubAPI(IConfiguration configuration)
         {
@@ -46,7 +46,7 @@ namespace DevDash.Services
         public async Task<IReadOnlyList<Issue>> GetIssuesAsync(string accessToken, long repoId)
         {
 
-            if(accessToken != null)
+            if (accessToken != null)
             {
                 client.Credentials = new Credentials(accessToken);
             }
@@ -54,7 +54,8 @@ namespace DevDash.Services
             {
                 var issues = await client.Issue.GetAllForRepository(repoId);
                 return issues;
-            } catch(AuthorizationException authException)
+            }
+            catch (AuthorizationException authException)
             {
                 throw authException;
             }
@@ -76,6 +77,23 @@ namespace DevDash.Services
                 throw authException;
             }
 
+        }
+
+        public async Task<Issue> AddNewIssue(string accessToken, long repoId, string issueName, string issueBody = null)
+        {
+            if (accessToken != null)
+            {
+                client.Credentials = new Credentials(accessToken);
+            }
+            try
+            {
+                var createIssue = new NewIssue(issueName);
+                return await client.Issue.Create(repoId, createIssue);
+            }
+            catch (AuthorizationException authException)
+            {
+                throw authException;
+            }
         }
     }
 }

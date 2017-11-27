@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using DevDash.Services;
 using Microsoft.Extensions.Configuration;
 using DevDash.Models.ApplicationHomeViewModels;
+using DevDash.Extensions;
 
 namespace DevDash.Controllers
 {
@@ -49,7 +50,7 @@ namespace DevDash.Controllers
                     RepoId = repo.Id,
                     RepoName = repo.Name,
                 };
-                _context.Add(gitHub);
+                _context.Set<GitHub>().AddIfNotExists(gitHub);
                 repoSelectListItem.Add(new SelectListItem { Text = repo.Name, Value = repo.Id.ToString() });
             }
 
@@ -61,7 +62,7 @@ namespace DevDash.Controllers
                     BoardId = board.Id,
                     BoardName = board.Name,
                 };
-                _context.Add(trello);
+                _context.Set<Trello>().AddIfNotExists(trello);
                 boardSelectListItem.Add(new SelectListItem { Text = board.Name, Value = board.Id});
 
             }
@@ -111,7 +112,8 @@ namespace DevDash.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Dashboards", new { id = guid.ToString() });
             }
-            return View(combinedModel);
+            //FIXME: This error should be handled more gracefully and present a message to users
+            return RedirectToAction("Index", "ApplicationHome"); 
         }
 
     }
