@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using DevDash.Data;
 using DevDash.Models;
 using DevDash.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using DevDash.Models.Trello;
 using TrelloNet;
 using DevDash.Models.DashboardViewModels;
 
@@ -50,5 +48,11 @@ namespace DevDash.Controllers
                 TrelloCards = cards
             });
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> GithubIssuesRequests()
+        //{
+        //}
     }
 }
