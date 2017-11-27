@@ -49,10 +49,40 @@ namespace DevDash.Controllers
             });
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> GithubIssuesRequests()
-        //{
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddNewIssue()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ModifyGithubIssue()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddNewTrelloCard()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ModifyTrelloCard()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteTrelloCard()
+        {
+            return PartialView();
+        }
+
     }
 }
