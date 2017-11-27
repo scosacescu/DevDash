@@ -4,16 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using TrelloNet;
 
 namespace DevDash.Models.DashboardViewModels
 {
-    public class DashboardDataViewModel
+    public class GithubIssueViewModel
     {
         [Required]
-        public GithubIssueViewModel Issues { get; set; }
-
-        [Required]
-        public TrelloViewModel TrelloViewModel { get; set; } 
+        public IReadOnlyList<Issue> Issues { get; set; }
     }
 }

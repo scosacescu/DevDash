@@ -35,7 +35,7 @@ namespace DevDash.Controllers
 
             Guid dashboardId = Guid.Parse(id);
             var dashboard = await _context.FindAsync<Dashboard>(dashboardId);
-            BoardId boardId = new Models.Trello.BoardId { dashboard.BoardId };
+            Models.TrelloModels.BoardId boardId = new Models.TrelloModels.BoardId { TrelloBoardId = dashboard.BoardId };
 
             var issues = await gitHubAPI.GetIssuesAsync(githubToken, dashboard.RepoId);
             var lists = trelloAPI.GetUserBoardList(trelloToken, boardId);
@@ -43,9 +43,15 @@ namespace DevDash.Controllers
 
             return View(new DashboardDataViewModel
             {
-                Issues = issues,
-                TrelloLists = lists,
-                TrelloCards = cards
+                Issues = new GithubIssueViewModel
+                {
+                    Issues = issues
+                },
+                TrelloViewModel = new TrelloViewModel
+                {
+                    TrelloCards = cards,
+                    TrelloLists = lists
+                }
             });
         }
 
