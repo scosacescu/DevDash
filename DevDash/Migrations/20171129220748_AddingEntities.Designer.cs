@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace DevDash.Data.Migrations
+namespace DevDash.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171119004849_something")]
-    partial class something
+    [Migration("20171129220748_AddingEntities")]
+    partial class AddingEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,8 @@ namespace DevDash.Data.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<bool>("GithubAuthenticated");
+
                     b.Property<string>("GithubKey");
 
                     b.Property<string>("LastName");
@@ -60,9 +62,11 @@ namespace DevDash.Data.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<bool>("TwoFactorEnabled");
+                    b.Property<bool>("TrelloAuthenticated");
 
-                    b.Property<Guid>("UserID");
+                    b.Property<string>("TrelloKey");
+
+                    b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
@@ -78,6 +82,82 @@ namespace DevDash.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("DevDash.Models.Dashboard", b =>
+                {
+                    b.Property<Guid>("DashboardId")
+                        .HasColumnName("dashboardID");
+
+                    b.Property<string>("BoardId")
+                        .IsRequired()
+                        .HasColumnName("boardID")
+                        .HasMaxLength(25)
+                        .IsUnicode(false);
+
+                    b.Property<string>("DashboardName")
+                        .IsRequired()
+                        .HasColumnName("dashboardName")
+                        .HasMaxLength(25)
+                        .IsUnicode(false);
+
+                    b.Property<long>("RepoId")
+                        .HasColumnName("repoID")
+                        .HasMaxLength(25)
+                        .IsUnicode(false);
+
+                    b.Property<string>("UserId")
+                        .HasColumnName("userID");
+
+                    b.HasKey("DashboardId");
+
+                    b.HasIndex("UserId", "BoardId");
+
+                    b.HasIndex("UserId", "RepoId");
+
+                    b.ToTable("Dashboard");
+                });
+
+            modelBuilder.Entity("DevDash.Models.GitHub", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnName("userID");
+
+                    b.Property<long>("RepoId")
+                        .HasColumnName("repoID")
+                        .HasMaxLength(25)
+                        .IsUnicode(false);
+
+                    b.Property<string>("RepoName")
+                        .IsRequired()
+                        .HasColumnName("repoName")
+                        .HasMaxLength(50)
+                        .IsUnicode(false);
+
+                    b.HasKey("UserId", "RepoId");
+
+                    b.ToTable("GitHub");
+                });
+
+            modelBuilder.Entity("DevDash.Models.Trello", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnName("userID");
+
+                    b.Property<string>("BoardId")
+                        .HasColumnName("boardID")
+                        .HasMaxLength(25)
+                        .IsUnicode(false);
+
+                    b.Property<string>("BoardName")
+                        .IsRequired()
+                        .HasColumnName("boardName")
+                        .HasMaxLength(50)
+                        .IsUnicode(false);
+
+                    b.HasKey("UserId", "BoardId");
+
+                    b.ToTable("Trello");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -186,6 +266,40 @@ namespace DevDash.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DevDash.Models.Dashboard", b =>
+                {
+                    b.HasOne("DevDash.Models.ApplicationUser", "User")
+                        .WithMany("Dashboard")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Dashboard_ToUser");
+
+                    b.HasOne("DevDash.Models.Trello", "Trello")
+                        .WithMany("Dashboard")
+                        .HasForeignKey("UserId", "BoardId")
+                        .HasConstraintName("FK_Dashboard_ToTrello");
+
+                    b.HasOne("DevDash.Models.GitHub", "GitHub")
+                        .WithMany("Dashboard")
+                        .HasForeignKey("UserId", "RepoId")
+                        .HasConstraintName("FK_Dashboard_ToGithub");
+                });
+
+            modelBuilder.Entity("DevDash.Models.GitHub", b =>
+                {
+                    b.HasOne("DevDash.Models.ApplicationUser", "User")
+                        .WithMany("GitHub")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_GitHub_ToUser");
+                });
+
+            modelBuilder.Entity("DevDash.Models.Trello", b =>
+                {
+                    b.HasOne("DevDash.Models.ApplicationUser", "User")
+                        .WithMany("Trello")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Trello_ToUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

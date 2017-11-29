@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DevDash.Migrations
 {
-    public partial class something : Migration
+    public partial class AddingEntities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -171,7 +171,6 @@ namespace DevDash.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GitHub", x => new { x.userID, x.repoID });
-                    table.UniqueConstraint("AK_GitHub_repoName", x => x.repoName);
                     table.ForeignKey(
                         name: "FK_GitHub_ToUser",
                         column: x => x.userID,

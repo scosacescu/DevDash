@@ -10,6 +10,7 @@ namespace DevDash.Models
         public long RepoId { get; set; }
         public string BoardId { get; set; }
         public string DashboardName { get; set; }
+
         [Key]
         public Guid DashboardId { get; set; }
 
