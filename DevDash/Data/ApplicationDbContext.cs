@@ -115,8 +115,9 @@ namespace DevDash.Data
             });
         }
 
-        public DbSet<DevDash.Models.ApplicationUser> ApplicationUser { get; set; }
-
-        public DbSet<DevDash.Models.Dashboard> Dashboard { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<Dashboard> Dashboard { get; set; }
+        public virtual DbSet<GitHub> GitHub { get; set; }
+        public virtual DbSet<Trello> Trello { get; set; }
     }
 }

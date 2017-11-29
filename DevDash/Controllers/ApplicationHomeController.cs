@@ -50,7 +50,7 @@ namespace DevDash.Controllers
                     RepoId = repo.Id,
                     RepoName = repo.Name,
                 };
-                _context.Set<GitHub>().AddIfNotExists(gitHub);
+                _context.GitHub.AddIfNotExists(gitHub, x => x.UserId == user.Id && x.RepoId == repo.Id);
                 repoSelectListItem.Add(new SelectListItem { Text = repo.Name, Value = repo.Id.ToString() });
             }
 
@@ -62,7 +62,7 @@ namespace DevDash.Controllers
                     BoardId = board.Id,
                     BoardName = board.Name,
                 };
-                _context.Set<Trello>().AddIfNotExists(trello);
+                _context.Trello.AddIfNotExists(trello, t => t.UserId == user.Id && t.BoardId == board.Id);
                 boardSelectListItem.Add(new SelectListItem { Text = board.Name, Value = board.Id});
 
             }
