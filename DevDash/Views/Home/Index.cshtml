@@ -2,9 +2,48 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <h2>Welcome to DevDash</h2>
-    <h4>Improving Developer Efficiency!</h4>
+
+<main role="main">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" style="background-image: url(../images/jumboe5.jpg); border-radius:0;">
+        <div class="container">
+            <h1 class="display-3">Welcome to DevDash</h1>
+            <div>
+                <p style="font-size: 1.25em; font-weight:bold;">Your custom project management dashboard.</p>
+        
+                <p style="font-size: 1.25em;"> Heads up! You'll need to be a <a href="http://www.github.com"style="font-weight:bold;">Github</a> and <a href="http://www.trello.com"style="font-weight:bold;">Trello</a> <br />user in order to unlock DevDash's functionality.</p >
+                <br /> <br/>
+                <p><a class="btn btn-success btn-lg"asp-area="" asp-controller="Account" asp-action="Register" role="button">Let's get started</a></p>
+        
+            </div>
+        </div>
+    </div>
+    <!-- Marketing messaging and featurettes
+      ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            <div class="col-lg-4">
+                <img class="rounded-circle" src="~/images/ic_bug_report_black_24dp_2x.png" alt="Generic placeholder image" width="60" height="60">
+                <h3>Track</h3>
+                <p style="font-size:1.25em;">and manage your project's Issues.</p>
     
-    <a asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-</div>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-circle" src="~/images/ic_extension_black_24dp_2x.png" alt="Generic placeholder image" width="60" height="60">
+                <h3>Integrate</h3>
+                <p style="font-size:1.25em;">your two favourite project tools.</pstyle="font-size:1.25em;>
+               
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-circle" src="~/images/ic_supervisor_account_black_24dp_2x.png" alt="Generic placeholder image" width="60" height="60">
+                <h3>Collaborate</h3>
+                <p style="font-size:1.25em;">more efficiently with developers,<br />designers, and managers.</p>
+                
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+    </div><!-- /.container -->
+</main>
+

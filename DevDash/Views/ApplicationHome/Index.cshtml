@@ -5,37 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Dashboard</h2>
-<div id="containerHomeContent">
-    <h3>Choose from your existing Dashboards: </h3>
+<div class="container">
+<h2>Your Dashboards</h2><br/>
 
     <div id="ddListDisplay">
         @if (Model.ApplicationHomeViewModel.UserDashboards.Count() == 0)
         {
-            <div class="trelloBoardPreview">
-                <h4 id="text">No dashboards created!</h4>
+            <div class="card-preview">
+                <h4 id="text">You don't have any dashboards yet</h4>
             </div>
         }
         else
         {
             foreach (Dashboard dash in Model.ApplicationHomeViewModel.UserDashboards)
             {
-                <div class="trelloBoardPreview">
-                    <a href="~/dashboards/@dash.DashboardId" id="text">@dash.DashboardName</a>
+                <div class="card-preview">
+                    <a href="~/dashboards/@dash.DashboardId" id="cardpreviewtext">@dash.DashboardName</a>
                 </div>
             }
         }
     </div>
-    <h5>Or, create a new one by linking a repo and board:</h5>
-    <div>
+
+    <br /><br />
+    <h4 style="font-weight:bold;">Create a new Dashboard by linking a Github repository to a Trello board</h4>
+    <div class="row">
         @using (Html.BeginForm("CreateDashboard", "ApplicationHome", FormMethod.Post))
         {
-            @Html.DropDownListFor(m => m.CreateDashboardViewModel.RepoId, Model.ApplicationHomeViewModel.GithubRepos, "Select one")
-            @Html.DropDownListFor(m => m.CreateDashboardViewModel.BoardId, Model.ApplicationHomeViewModel.TrelloBoard, "Select one")
-            @Html.TextBoxFor(m => m.CreateDashboardViewModel.DashboardName)
-            
-            <input type="submit" value="Create a new dashboard!" />
-        }
-    </div>
+            <div class="col-md-2"> @Html.DropDownListFor(m => m.CreateDashboardViewModel.RepoId, Model.ApplicationHomeViewModel.GithubRepos, "Select a Repo")</div>
+            <div class="col-md-3"> @Html.DropDownListFor(m => m.CreateDashboardViewModel.BoardId, Model.ApplicationHomeViewModel.TrelloBoard, "Select a Board")</div>
+            <div class="col-md-3">Name:@Html.TextBoxFor(m => m.CreateDashboardViewModel.DashboardName)</div>
+
+            <div class="col-md-1"> <input type="submit" class="btn btn-success" value="Create!" /> </div>
+            <div class="col-md-3"/>
+    }
+</div>
 
 </div>
