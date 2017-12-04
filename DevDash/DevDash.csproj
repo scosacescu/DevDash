@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Compile Remove="Data\DevDashDBContext.cs" />
-    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
     <Compile Remove="Data\Migrations\20171017234850_IntialCreate.cs" />
     <Compile Remove="Data\Migrations\20171017234850_IntialCreate.Designer.cs" />
     <Compile Remove="Data\Migrations\20171119004849_something.cs" />
