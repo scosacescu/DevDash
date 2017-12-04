@@ -8,20 +8,22 @@
 <div class="container">
 <h2>Your Dashboards</h2><br/>
 
-    <div id="ddListDisplay">
+    <div id="apphomeflexcontainer">
         @if (Model.ApplicationHomeViewModel.UserDashboards.Count() == 0)
         {
-            <div class="card-preview">
                 <h4 id="text">You don't have any dashboards yet</h4>
-            </div>
         }
         else
         {
             foreach (Dashboard dash in Model.ApplicationHomeViewModel.UserDashboards)
             {
-                <div class="card-preview">
-                    <a href="~/dashboards/index/@dash.DashboardId" id="cardpreviewtext">@dash.DashboardName</a>
-                </div>
+                <a href="~/dashboards/index/@dash.DashboardId" id="cardpreviewtext">
+                    <div class="card-preview apphomeflexitem">
+                        <h4 style="color:white;">
+                            @dash.DashboardName
+                        </h4>
+                    </div>
+                </a>
             }
         }
     </div>
