@@ -67,7 +67,7 @@ namespace DevDash.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Authentication");
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -222,7 +222,7 @@ namespace DevDash.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, GithubAuthenticated = false, TrelloAuthenticated = false};
+                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, GithubAuthenticated = false, TrelloAuthenticated = false };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -234,7 +234,8 @@ namespace DevDash.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+
+                    return RedirectToAction("Index", "Authentication");
                 }
                 AddErrors(result);
             }
