@@ -4,39 +4,39 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    
+    <h2>Link your Accounts</h2>
+    <p> In order to use DevDash, you need to authorize this application to access your Github and Trello accounts. </p>
+    <p> You can revoke authorization at any time.</p>
 
-<h2>Index</h2>
+    <div id="githubauth">
+        @if (Model.GithubAuthorized)
+        {
+            <div>
+                <p>Already Authorized</p>
+            </div>
+        }
+        else
+        {
+            <div>
+                <a href="@Model.GithubAuthURL">Authorize with GitHub</a>
+            </div>
+        }
+    </div>
 
-<p>
-    <a asp-action="Create">Authorization Page</a>
-</p>
-
-<div id="githubauth">
-    @if (Model.GithubAuthorized)
-    {
-        <div>
-            <p>Already Authorized</p>
-        </div>
-    }
-    else
-    {
-        <div>
-            <a href="@Model.GithubAuthURL">Authorize with github</a>
-        </div>
-    }
-</div>
-
-<div id="trelloauth">
-    @if (Model.TrelloAuthorized)
-    {
-        <div>
-            <p>Already Authorized</p>
-        </div>
-    }
-    else
-    {
-        <div>
-            <a href="@Model.TrelloAuthURL">Authorize with trello</a>
-        </div>
-    }
+    <div id="trelloauth">
+        @if (Model.TrelloAuthorized)
+        {
+            <div>
+                <p>Already Authorized</p>
+            </div>
+        }
+        else
+        {
+            <div>
+                <a href="@Model.TrelloAuthURL">Authorize with Trello</a>
+            </div>
+        }
+    </div>
 </div>
