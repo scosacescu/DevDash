@@ -17,13 +17,13 @@
         {
             foreach (Dashboard dash in Model.ApplicationHomeViewModel.UserDashboards)
             {
-                <a href="~/dashboards/index/@dash.DashboardId" id="cardpreviewtext">
-                    <div class="card-preview apphomeflexitem">
-                        <h4 style="color:white;">
-                            @dash.DashboardName
-                        </h4>
-                    </div>
-                </a>
+                    <div class="apphomeflexitem">
+                        <a href="~/dashboards/index/@dash.DashboardId" class="fill-div" style="padding:5px;">
+                            <h4 style="color:white;">
+                                @dash.DashboardName
+                            </h4>
+                        </a>
+                   </div>
             }
         }
     </div>
