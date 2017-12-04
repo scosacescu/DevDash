@@ -80,7 +80,7 @@ namespace DevDash.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt." + model.Password);
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
             }
