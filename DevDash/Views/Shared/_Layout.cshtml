@@ -1,4 +1,9 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@using Microsoft.AspNetCore.Identity
+@using DevDash.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +40,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                <a asp-area="" asp-controller="ApplicationHome" asp-action="Index" class="navbar-brand">DevDash</a>
+                }
+                else {
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">DevDash</a>
+                }
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
