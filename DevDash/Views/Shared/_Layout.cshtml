@@ -9,6 +9,13 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <!-- Bootstrap core CSS -->
+        <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="dashboard.css" rel="stylesheet">
+
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -33,21 +40,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="AppHome">AppHome</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Dashboard">DashBoard</a></li>
 
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="container-fluid">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>DevDash 2017</p>
-        </footer>
+        <br/>
     </div>
+
+    <footer>
+        <p>DevDash 2017</p>
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

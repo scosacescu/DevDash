@@ -4,19 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
 <body>
-    <h2>ProjectDashboard</h2>
+    <div class="container">
+        <h2>Project Dashboard</h2>
+        <hr />
+    </div>
 
-    <div class="flex">
-        @Html.Partial("IssuesPartialView", Model.Issues)
-        @Html.Partial("TrelloListPartialView", Model.TrelloViewModel)
+    <div class="row">
+               
+        <div class="col-md-3">
+            @* make the left "nav" pull up all issues for the repo *@
+            <div class="nav nav-pills nav-stacked"></div>
+            <h3>Repository Issues</h3>
+            @Html.Partial("IssuesPartialView", Model.Issues)
+        </div>
+
+        <div class="col-md-9">
+            <div class="scrolling-trelloboard-wrapper">
+                @Html.Partial("TrelloListPartialView", Model.TrelloViewModel)
+            </div>
+
+
+        </div>
+        
     </div>
 </body>
-</html>
