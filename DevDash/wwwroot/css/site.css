@@ -96,7 +96,7 @@ footer p{
     padding: 5px;
 }
 
-#verticalScroll {
+.verticalScroll {
     overflow-y: scroll;
 }
 
@@ -143,4 +143,18 @@ footer p{
 .jumbotron {
     /*background-image: */
     background-size: cover;
+}
+
+.scrolling-trelloboard-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.list {
+    flex: 0 0 auto;
+}
+
+.listcard{
+
 }
