@@ -69,6 +69,7 @@ namespace DevDash.Controllers
 
 
             await _context.SaveChangesAsync();
+            _context.Entry(user).Collection(x => x.Dashboard).Load();
             var dashboards = user.Dashboard;
             var repoSelectList = new SelectList(repoSelectListItem, "Value", "Text");
             var boardSelectList = new SelectList(boardSelectListItem, "Value", "Text");
