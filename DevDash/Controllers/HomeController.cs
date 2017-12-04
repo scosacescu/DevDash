@@ -5,13 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DevDash.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DevDash.Controllers
 {
     public class HomeController : Controller
     {
+
+        private UserManager<ApplicationUser> _userManager;
+
+        public HomeController(UserManager<ApplicationUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                RedirectToAction("Index", "ApplicationHome");
+            }
             return View();
         }
 
