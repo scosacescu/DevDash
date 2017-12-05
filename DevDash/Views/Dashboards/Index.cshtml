@@ -1,9 +1,16 @@
-﻿@model DevDash.Models.DashboardViewModels.DashboardDataViewModel 
+﻿@model DevDash.Models.DashboardViewModels.DashboardDataViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/js/TrelloCard.js"></script>
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="~/css/TrelloCard.css" rel="stylesheet" type="text/css" />
 
 <body>
     <div class="container">
@@ -12,7 +19,7 @@
     </div>
 
     <div class="row">
-               
+
         <div class="col-md-3">
             @* make the left "nav" pull up all issues for the repo *@
             <div class="nav nav-pills nav-stacked"></div>
@@ -27,6 +34,6 @@
 
 
         </div>
-        
+
     </div>
 </body>
