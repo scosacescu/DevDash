@@ -1,7 +1,24 @@
-﻿
+﻿@model DevDash.Models.DashboardViewModels.TrelloViewModel
 
+<div id="trelloView">
+    <h3>@Model.BoardName</h3>
 
-<h3>{Trello Board Name for this Repo}</h3>
-
-
-
+    @foreach (TrelloNet.List list in Model.TrelloLists)
+    {
+        <div class="column">
+            <h4>
+                @list.Name
+            </h4>
+            @foreach (TrelloNet.Card card in Model.TrelloCards)
+            {
+                @if (card.IdList == list.Id)
+                {
+                    <div class="portlet">
+                        <div class="portlet-header">@card.Name</div>
+                        <div class="portlet-content">@card.Desc</div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

@@ -38,6 +38,13 @@ namespace DevDash.Services
             return boards;
         }
 
+        public Board GetSingleBoard(string token, string id)
+        {
+            trello.Authorize(token);
+            var board = trello.Boards.WithId(id);
+            return board;
+        }
+
         public IEnumerable<List> GetUserBoardList(string token, IBoardId boardId)
         {
             trello.Authorize(token);

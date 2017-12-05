@@ -38,6 +38,7 @@ namespace DevDash.Controllers
             Models.TrelloModels.BoardId boardId = new Models.TrelloModels.BoardId { TrelloBoardId = dashboard.BoardId };
 
             var issues = await gitHubAPI.GetIssuesAsync(githubToken, dashboard.RepoId);
+            var board = trelloAPI.GetSingleBoard(trelloToken, dashboard.BoardId);
             var lists = trelloAPI.GetUserBoardList(trelloToken, boardId);
             var cards = trelloAPI.GetBoardCards(trelloToken, boardId);
 
@@ -49,6 +50,7 @@ namespace DevDash.Controllers
                 },
                 TrelloViewModel = new TrelloViewModel
                 {
+                    BoardName = board.Name,
                     TrelloCards = cards,
                     TrelloLists = lists
                 }
