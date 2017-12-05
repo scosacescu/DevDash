@@ -7,6 +7,9 @@ namespace DevDash.Models.DashboardViewModels
     public class TrelloViewModel
     {
         [Required]
+        public string BoardName { get; set; }
+
+        [Required]
         public IEnumerable<List> TrelloLists { get; set; }
 
         [Required]

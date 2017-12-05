@@ -59,11 +59,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="scripts\" />
+    <None Include="wwwroot\js\TrelloCard.js" />
   </ItemGroup>
 
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="scripts\" />
   </ItemGroup>
 
 </Project>
