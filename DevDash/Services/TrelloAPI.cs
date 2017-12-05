@@ -24,7 +24,7 @@ namespace DevDash.Services
             var url = trello.GetAuthorizationUrl("DevDash", Scope.ReadWrite, Expiration.Never);
             var uriBuilder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["return_url"] = "https://localhost:44313/authentication/authorizetrelloajax/";
+            query["return_url"] = "http://devdash20171205121647.azurewebsites.net/authentication/authorizetrelloajax/";
             query["response_type"] = "token";
             uriBuilder.Query = query.ToString();
             return uriBuilder.ToString();
